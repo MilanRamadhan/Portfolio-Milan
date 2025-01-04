@@ -37,7 +37,7 @@ body.dark-mode nav a:hover {
 }
 
 body.dark-mode nav a::after {
-    background: #00B4D8;
+    background: #80d4f7;
 }
 
 /* SECTIONS - DARK MODE */
@@ -65,8 +65,9 @@ body.dark-mode .portfolio-item div:hover {
 body.dark-mode .contact-form input, 
 body.dark-mode .contact-form textarea {
     background: #2a2a2a;
-    border-color: #444;
+    border-color: #00B4D8;
     color: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body.dark-mode .contact-form input:focus, 
@@ -100,7 +101,7 @@ header, footer {
     color: #ffffff;
     text-align: center;
     padding: 1.5rem 0;
-    font-size: 0.7rem;
+    font-size: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -262,4 +263,30 @@ section:hover {
 .contact-form button {
     padding: 0.75rem;
     background: linear-gradient(135deg, #007BFF, #00B4D8);
+    transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+    background: linear-gradient(135deg, #0056b3, #0077cc);
+}
+
+/* MEDIA QUERIES FOR RESPONSIVENESS */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .portfolio-item div {
+        flex: 1 1 100%;
+    }
+
+    section {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    nav a {
+        margin: 0.5rem 0;
+    }
 }
