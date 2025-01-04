@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="progress-bar"></div>
+    <header>
+        <h1>Hi, I'm Milan - A Passionate Web Developer</h1>
+    </header>
+    <nav>
+        <a href="#about"><i class="fas fa-user"></i> About Me</a>
+        <a href="#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        <button id="toggle-dark-mode"><i class="fas fa-moon"></i> Dark Mode</button>
+    </nav>    
+
+    <section id="about" data-aos="fade-up">
+        <h2>About Me</h2>
+        <img src="milan.jpg" alt="Profile Picture" class="profile-img">
+        <p>Hello! My name is Milan, a passionate web developer specializing in creating responsive and user-friendly websites. With a focus on clean code and engaging design, I strive to deliver the best experience for my clients.</p>
+        <p>I am proficient in HTML, CSS, and currently exploring JavaScript to enhance my development skills.</p>
+    </section>
+    
+    <section id="portfolio" data-aos="fade-left">
+        <h2>Portfolio</h2>
+        <div class="portfolio-item">
+            <div class="slide-in">
+                <h3>Project 1</h3>
+                <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+            </div>
+            <div class="slide-in">
+                <h3>Project 2</h3>
+                <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+            </div>
+            <div class="slide-in">
+                <h3>Project 3</h3>
+                <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" data-aos="fade-right">
+        <h2>Skills</h2>
+        <ul>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript (Coming soon)</li>
+            <li>Responsive Web Design</li>
+            <li>Basic SEO</li>
+        </ul>
+    </section>    
+    
+    <section id="contact">
+        <h2>Contact</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 My Portfolio</p>
+    </footer>
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+    <script>
+        const toggle = document.getElementById('darkModeToggle');
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>
