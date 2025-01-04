@@ -15,59 +15,67 @@
         <h1>Hi, I'm Milan - A Passionate Web Developer</h1>
     </header>
     <nav>
-        <a href="#about"><i class="fas fa-user" aria-hidden="true"></i> About Me</a>
-        <a href="#portfolio"><i class="fas fa-briefcase" aria-hidden="true"></i> Portfolio</a>
-        <a href="#contact"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="#about" aria-label="Navigate to About Me">
+            <i class="fas fa-user" aria-hidden="true"></i> About Me
+        </a>
+        <a href="#portfolio" aria-label="Navigate to Portfolio">
+            <i class="fas fa-briefcase" aria-hidden="true"></i> Portfolio
+        </a>
+        <a href="#contact" aria-label="Navigate to Contact">
+            <i class="fas fa-envelope" aria-hidden="true"></i> Contact
+        </a>
         <button id="toggle-dark-mode" aria-label="Toggle Dark Mode">
             <i class="fas fa-moon"></i>
         </button>
     </nav>    
 
-    <section id="about" data-aos="fade-up">
-        <h2>About Me</h2>
-        <img src="milan.jpg" alt="Profile picture of Milan" class="profile-img">
-        <p>Hello! My name is Milan, a passionate web developer specializing in creating responsive and user-friendly websites. With a focus on clean code and engaging design, I strive to deliver the best experience for my clients.</p>
-        <p>I am proficient in HTML, CSS, and currently exploring JavaScript to enhance my development skills.</p>
-    </section>
-    
-    <section id="portfolio" data-aos="fade-left">
-        <h2>Portfolio</h2>
-        <div class="portfolio-item">
-            <div class="slide-in">
-                <h3>Project 1</h3>
-                <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+    <main>
+        <section id="about" data-aos="fade-up">
+            <h2>About Me</h2>
+            <img src="milan.jpg" alt="Profile picture of Milan" class="profile-img">
+            <p>Hello! My name is Milan, a passionate web developer specializing in creating responsive and user-friendly websites. With a focus on clean code and engaging design, I strive to deliver the best experience for my clients.</p>
+            <p>I am proficient in HTML, CSS, and currently exploring JavaScript to enhance my development skills.</p>
+        </section>
+        
+        <section id="portfolio" data-aos="fade-left">
+            <h2>Portfolio</h2>
+            <div class="portfolio-item">
+                <div class="slide-in">
+                    <h3>Project 1</h3>
+                    <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+                </div>
+                <div class="slide-in">
+                    <h3>Project 2</h3>
+                    <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+                </div>
+                <div class="slide-in">
+                    <h3>Project 3</h3>
+                    <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
+                </div>
             </div>
-            <div class="slide-in">
-                <h3>Project 2</h3>
-                <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
-            </div>
-            <div class="slide-in">
-                <h3>Project 3</h3>
-                <p>A showcase of some of my best works. Explore how I bring ideas to life through innovative designs and coding.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="skills" data-aos="fade-right">
-        <h2>Skills</h2>
-        <ul>
-            <li>HTML5</li>
-            <li>CSS3</li>
-            <li>JavaScript (Coming soon)</li>
-            <li>Responsive Web Design</li>
-            <li>Basic SEO</li>
-        </ul>
-    </section>    
-    
-    <section id="contact">
-        <h2>Contact</h2>
-        <form class="contact-form">
-            <input type="text" placeholder="Your Name" required aria-label="Your Name">
-            <input type="email" placeholder="Your Email" required aria-label="Your Email">
-            <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+        <section id="skills" data-aos="fade-right">
+            <h2>Skills</h2>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript (Coming soon)</li>
+                <li>Responsive Web Design</li>
+                <li>Basic SEO</li>
+            </ul>
+        </section>    
+        
+        <section id="contact">
+            <h2>Contact</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required aria-label="Your Name">
+                <input type="email" placeholder="Your Email" required aria-label="Your Email">
+                <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2024 My Portfolio</p>
