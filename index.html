@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio Website of Milan, a passionate web developer.">
     <title>Portfolio Website</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -14,15 +15,17 @@
         <h1>Hi, I'm Milan - A Passionate Web Developer</h1>
     </header>
     <nav>
-        <a href="#about"><i class="fas fa-user"></i> About Me</a>
-        <a href="#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a>
-        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
-        <button id="toggle-dark-mode"><i class="fas fa-moon"></i> Dark Mode</button>
+        <a href="#about"><i class="fas fa-user" aria-hidden="true"></i> About Me</a>
+        <a href="#portfolio"><i class="fas fa-briefcase" aria-hidden="true"></i> Portfolio</a>
+        <a href="#contact"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a>
+        <button id="toggle-dark-mode" aria-label="Toggle Dark Mode">
+            <i class="fas fa-moon"></i>
+        </button>
     </nav>    
 
     <section id="about" data-aos="fade-up">
         <h2>About Me</h2>
-        <img src="milan.jpg" alt="Profile Picture" class="profile-img">
+        <img src="milan.jpg" alt="Profile picture of Milan" class="profile-img">
         <p>Hello! My name is Milan, a passionate web developer specializing in creating responsive and user-friendly websites. With a focus on clean code and engaging design, I strive to deliver the best experience for my clients.</p>
         <p>I am proficient in HTML, CSS, and currently exploring JavaScript to enhance my development skills.</p>
     </section>
@@ -59,9 +62,9 @@
     <section id="contact">
         <h2>Contact</h2>
         <form class="contact-form">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <input type="text" placeholder="Your Name" required aria-label="Your Name">
+            <input type="email" placeholder="Your Email" required aria-label="Your Email">
+            <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
             <button type="submit">Send Message</button>
         </form>
     </section>
@@ -69,13 +72,48 @@
     <footer>
         <p>&copy; 2024 My Portfolio</p>
     </footer>
-    <script src="script.js"></script>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>AOS.init();</script>
     <script>
-        const toggle = document.getElementById('darkModeToggle');
-        toggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
+        // Dark Mode Toggle
+        const toggleDarkMode = document.getElementById('toggle-dark-mode');
+        const body = document.body;
+
+        toggleDarkMode.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const icon = toggleDarkMode.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+
+        // Progress Bar
+        const progressBar = document.getElementById('progress-bar');
+        window.addEventListener('scroll', () => {
+            const scrollDistance = window.scrollY;
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrollDistance / totalHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        // Active Navigation Highlight
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
