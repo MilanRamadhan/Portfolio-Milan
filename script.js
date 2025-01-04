@@ -7,13 +7,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('section');
 
+    // Progress bar saat scroll
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrollPercent = (scrollTop / scrollHeight) * 100;
         document.getElementById('progress-bar').style.width = scrollPercent + '%';
+
+        // Highlight link saat scroll
+        sections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                if (navLinks[index]) {
+                    navLinks[index].classList.add('active');
+                }
+            }
+        });
     });
-    
+
     const activateAnimation = (targetElement) => {
         // Hapus animasi dari elemen lain
         sections.forEach(section => {
@@ -30,8 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const darkModeButton = document.getElementById('toggle-dark-mode');
     if (darkModeButton) {
+        const icon = darkModeButton.querySelector('i');
         darkModeButton.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
         });
     }
 
