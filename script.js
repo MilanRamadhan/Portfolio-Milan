@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Pastikan AOS sudah disertakan jika digunakan
+    // Initialize AOS if available
     if (typeof AOS !== 'undefined') {
         AOS.init();
     }
@@ -7,65 +7,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('section');
 
-    // Progress bar saat scroll
+    // Progress bar update on scroll
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrollPercent = (scrollTop / scrollHeight) * 100;
-        document.getElementById('progress-bar').style.width = scrollPercent + '%';
+        document.getElementById('progress-bar').style.width = `${scrollPercent}%`;
 
-        // Highlight link saat scroll
-        sections.forEach((section, index) => {
+        // Highlight active navigation link based on scroll position
+        sections.forEach((section) => {
             const rect = section.getBoundingClientRect();
             if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
                 navLinks.forEach(link => link.classList.remove('active'));
-                if (navLinks[index]) {
-                    navLinks[index].classList.add('active');
+                const activeLink = document.querySelector(`nav a[href="#${section.id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
                 }
             }
         });
     });
 
-    const activateAnimation = (targetElement) => {
-        // Hapus animasi dari elemen lain
-        sections.forEach(section => {
-            if (section !== targetElement && section.classList.contains('slide-in')) {
-                section.classList.remove('slide-in');
-            }
-        });
+    const toggleDarkMode = () => {
+        const body = document.body;
+        const darkModeButton = document.getElementById('toggle-dark-mode');
+        const icon = darkModeButton.querySelector('i');
 
-        // Tambahkan animasi jika belum ada
-        if (!targetElement.classList.contains('slide-in')) {
-            targetElement.classList.add('slide-in');
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
         }
     };
 
+    // Dark mode toggle button event listener
     const darkModeButton = document.getElementById('toggle-dark-mode');
     if (darkModeButton) {
-        const icon = darkModeButton.querySelector('i');
-        darkModeButton.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        });
+        darkModeButton.addEventListener('click', toggleDarkMode);
     }
 
-    // Tambahkan event listener pada setiap tautan navigasi
+    // Smooth scrolling and animation activation for navigation links
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
-            const targetId = link.getAttribute('href').replace('#', '');
+            const targetId = link.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
 
             if (targetElement) {
-                activateAnimation(targetElement);
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+                sections.forEach(section => section.classList.remove('slide-in'));
+                targetElement.classList.add('slide-in');
+
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+
+                window.scrollTo({
+                    top: targetPosition - navHeight,
+                    behavior: 'smooth'
+                });
             }
         });
     });
+
+    // Ensure smooth scroll behavior is applied globally
+    document.documentElement.style.scrollBehavior = 'smooth';
 });
