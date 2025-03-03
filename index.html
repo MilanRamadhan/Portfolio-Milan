@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio Website of Milan, a passionate web developer." />
+    <title>Portfolio Website</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="progress-bar"></div>
+    <header>
+      <h1>Hello, I'm Milan - A Programmer</h1>
+    </header>
+    <nav>
+      <a href="#about" aria-label="Navigate to About Me"> <i class="fas fa-user" aria-hidden="true"></i> About Me </a>
+      <a href="#portfolio" aria-label="Navigate to Portfolio"> <i class="fas fa-briefcase" aria-hidden="true"></i> Portfolio </a>
+      <a href="#contact" aria-label="Navigate to Contact"> <i class="fas fa-envelope" aria-hidden="true"></i> Contact </a>
+    </nav>
+
+    <main>
+      <section id="about">
+        <h2>About Me</h2>
+        <img src="image/milan.jpg" alt="Profile picture of Milan" class="profile-img" />
+        <p>
+          Hello! My name is Muhammad Milan Ramadhan Mulizar, and I am a passionate web developer specializing in creating responsive and user-friendly websites. With a focus on clean code and engaging design, I strive to provide the best
+          experience for my clients.
+        </p>
+        <p>I am proficient in HTML and CSS, and I am currently exploring JavaScript to further enhance my development skills.</p>
+      </section>
+
+      <section id="portfolio">
+        <h2>Portfolio</h2>
+        <div class="portfolio-item">
+          <div class="slide-in">
+            <h3>AquaSave Application Mobile Application</h3>
+            <img src="image/aquasave.png" alt="AquaSave App" />
+            <p>AquaSave adalah aplikasi mobile yang membantu pengguna dalam memantau dan mengelola penggunaan air secara real-time.</p>
+          </div>
+          <div class="slide-in">
+            <h3>ClimateAction Network Mobile</h3>
+            <img src="image/climateaction.png" alt="ClimateAction Network App" />
+            <p>ClimateAction Network adalah aplikasi mobile yang menghubungkan komunitas peduli lingkungan dan mendukung aksi nyata untuk keberlanjutan planet.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript (Coming soon)</li>
+          <li>Flutter</li>
+          <li>Fotography</li>
+          <li>Videography</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <form class="contact-form">
+          <input type="text" placeholder="Your Name" required aria-label="Your Name" />
+          <input type="email" placeholder="Your Email" required aria-label="Your Email" />
+          <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Muhammad Milan Ramadhan Mulizar</p>
+    </footer>
+  </body>
+</html>
