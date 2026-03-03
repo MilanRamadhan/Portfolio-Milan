@@ -1,20 +1,12 @@
 @import "tailwindcss";
 
-/* Kita hapus settingan :root dan @theme bawaan 
-  agar tidak memaksa background menjadi putih.
-*/
-
-/* Pastikan halaman selalu full screen dan base color hitam */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #050505; /* Warna dasar hampir hitam */
-  color: #ffffff; /* Warna teks dasar putih */
+  /* Ganti background jadi warna abu-abu hangat seperti di desain */
+  background-color: #d4d4d0;
+  color: #1a1a1a; /* Text jadi hitam/gelap */
 }
-
-/* Opsional: Tambahkan utilitas custom jika nanti butuh, 
-  tapi untuk sekarang ini saja sudah cukup.
-*/
