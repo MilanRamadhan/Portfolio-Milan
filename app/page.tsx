@@ -56,7 +56,7 @@ export default function Home() {
               {/* Foto dengan rounded bawah saja, flat di atas - mulai dari top */}
               <div className="relative w-full h-full rounded-b-[50%] overflow-hidden z-10">
                 <Image
-                  src="/image/IMG_2570.jpg"
+                  src="/image/IMG_2570.png"
                   alt="Milan Profile"
                   fill
                   className="object-cover object-center scale-140 hover:scale-150 transition-transform duration-700"
