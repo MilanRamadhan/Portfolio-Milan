@@ -73,16 +73,15 @@ export default function ProjectsCarousel() {
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeIndexRef = useRef(midIndex);
 
-  useEffect(() => { activeIndexRef.current = activeIndex; }, [activeIndex]);
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   // IntersectionObserver — track visibility
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.4 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), { threshold: 0.4 });
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
@@ -235,9 +234,7 @@ export default function ProjectsCarousel() {
                 className="h-1.5 rounded-full overflow-hidden transition-all duration-300 relative"
                 style={{
                   width: isActive ? 28 : 8,
-                  backgroundColor: isActive
-                    ? `${projects[activeIndex].accent}40`
-                    : "rgba(255,255,255,0.2)",
+                  backgroundColor: isActive ? `${projects[activeIndex].accent}40` : "rgba(255,255,255,0.2)",
                 }}
               >
                 {isActive && isVisible && !isPaused && (

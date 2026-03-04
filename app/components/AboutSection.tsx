@@ -343,11 +343,7 @@ export default function AboutSection() {
                   onClick={() => scrollToPanel(i)}
                   aria-label={`Go to ${panel.label}`}
                   className={`rounded-full overflow-hidden relative transition-all duration-300 h-2 ${
-                    isActive
-                      ? `w-10 ${isDark ? "bg-white/20" : "bg-black/15"}`
-                      : isDark
-                      ? "w-4 bg-white/20 hover:bg-white/35"
-                      : "w-4 bg-black/15 hover:bg-black/30"
+                    isActive ? `w-10 ${isDark ? "bg-white/20" : "bg-black/15"}` : isDark ? "w-4 bg-white/20 hover:bg-white/35" : "w-4 bg-black/15 hover:bg-black/30"
                   }`}
                 >
                   {isActive && isVisible && !isPaused && (
