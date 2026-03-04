@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@keyframes panel-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 html,
 body {
   height: 100%;

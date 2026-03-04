@@ -89,10 +89,24 @@ const PANELS = [
   { bg: "dark", label: "Journey" },
 ] as const;
 
+const AUTO_INTERVAL = 5000; // ms per panel
+const PAUSE_AFTER_INTERACT = 10000; // ms to pause after manual interaction
+
 export default function AboutSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [activePanel, setActivePanel] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activePanelRef = useRef(0);
 
+  // Keep ref in sync with state for use inside interval callback
+  useEffect(() => {
+    activePanelRef.current = activePanel;
+  }, [activePanel]);
+
+  // Sync activePanel from scroll position
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -104,16 +118,40 @@ export default function AboutSection() {
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
+  // IntersectionObserver — track if section is on screen
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), { threshold: 0.5 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-advance interval
+  useEffect(() => {
+    if (!isVisible || isPaused) return;
+    const id = setInterval(() => {
+      const next = (activePanelRef.current + 1) % PANELS.length;
+      const el = scrollRef.current;
+      if (el) el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+    }, AUTO_INTERVAL);
+    return () => clearInterval(id);
+  }, [isVisible, isPaused]);
+
   const scrollToPanel = (idx: number) => {
     const el = scrollRef.current;
     if (!el) return;
     el.scrollTo({ left: idx * el.clientWidth, behavior: "smooth" });
+    // Pause auto-advance after manual interaction
+    setIsPaused(true);
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    pauseTimerRef.current = setTimeout(() => setIsPaused(false), PAUSE_AFTER_INTERACT);
   };
 
   const isDark = PANELS[activePanel].bg === "dark";
 
   return (
-    <section id="about" className="font-sans relative h-screen overflow-hidden">
+    <section ref={sectionRef} id="about" className="font-sans relative h-screen overflow-hidden">
       {/* ═══ Horizontal snap-scroll container ═══ */}
       <div ref={scrollRef} className="flex h-full overflow-x-scroll snap-x snap-mandatory [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: "none" }}>
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
