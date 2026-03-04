@@ -28,36 +28,58 @@ const techCategories = [
 
 const timeline = [
   {
-    year: "2022 — Now",
+    year: "2023 — Now",
     title: "Informatics Student",
-    place: "Universitas Syiah Kuala",
-    desc: "Software Engineering, Machine Learning & Web Dev. Active in campus tech communities.",
+    place: "FMIPA, Universitas Syiah Kuala",
+    desc: "Studying Software Engineering, Machine Learning & Web Development at USK's Faculty of Mathematics and Natural Sciences.",
     type: "edu",
+    tag: "EDU",
     index: "01",
   },
   {
-    year: "2023",
-    title: "Frontend Developer Intern",
-    place: "PT. Smart City Aceh",
-    desc: "Built civic reporting dashboard used by the Banda Aceh government for real-time issue tracking.",
-    type: "work",
+    year: "2023 — Now",
+    title: "Self-taught Developer",
+    place: "freeCodeCamp & Online Platforms",
+    desc: "Completed certifications in Responsive Web Design, JavaScript Algorithms, and Data Structures through freeCodeCamp and self-paced platforms.",
+    type: "edu",
+    tag: "LEARN",
     index: "02",
   },
   {
-    year: "2023",
-    title: "Winner — Hackathon Aceh",
-    place: "DigiAceh Competition",
-    desc: "Built 'Climate Action' — an eco-community app with gamification for recycling & environmental events.",
-    type: "award",
+    year: "2024",
+    title: "BEM FMIPA USK",
+    place: "Badan Eksekutif Mahasiswa FMIPA",
+    desc: "Member of the Student Executive Board, contributing to the Videography & Design division for faculty-level events and publications.",
+    type: "work",
+    tag: "ORG",
     index: "03",
   },
   {
-    year: "2024",
-    title: "Freelance Full-Stack Dev",
-    place: "Self-employed",
-    desc: "Delivered 6+ web projects: booking systems, portals, and e-commerce platforms.",
+    year: "2025",
+    title: "HMIF USK — Vice Head",
+    place: "Dept. Sosial Masyarakat",
+    desc: "Vice Head of the Social Community department at the Informatics Student Association — coordinating outreach and welfare programs.",
     type: "work",
+    tag: "ORG",
     index: "04",
+  },
+  {
+    year: "2026",
+    title: "HMIF USK — Vice Chairman I",
+    place: "Himpunan Mahasiswa Informatika",
+    desc: "Elected Vice Chairman I — overseeing organizational strategy, inter-department coordination, and student representation at campus level.",
+    type: "award",
+    tag: "LEAD",
+    index: "05",
+  },
+  {
+    year: "2025 — Now",
+    title: "IBM SkillsBuild AI Scholarship",
+    place: "Pijak × Dicoding × IBM SkillsBuild",
+    desc: "Recipient of a fully-funded AI training scholarship through the Pijak program — a collaboration between Dicoding and IBM SkillsBuild.",
+    type: "award",
+    tag: "AWARD",
+    index: "06",
   },
 ];
 
@@ -213,31 +235,43 @@ export default function AboutSection() {
             {/* Content */}
             <div className="col-span-11 flex flex-col justify-center px-8 md:px-16 py-12 overflow-y-auto">
               <p className="text-xs font-bold tracking-[0.35em] text-white/30 uppercase mb-3">— Where I've Been</p>
-              <h2 className="text-5xl md:text-6xl font-extrabold leading-[0.95] tracking-tight mb-10">
+              <h2 className="text-4xl md:text-5xl font-extrabold leading-[0.95] tracking-tight mb-6">
                 Experience & <span className="font-serif italic font-normal text-white/40">Education</span>
               </h2>
 
-              {/* Timeline cards — 2×2 grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {timeline.map((item) => (
-                  <div
-                    key={item.index}
-                    className={`rounded-2xl p-5 border flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5 ${
-                      item.type === "award" ? "bg-white text-black border-white" : "bg-white/[0.03] border-white/10 hover:bg-white/[0.06]"
-                    }`}
-                  >
-                    <div>
-                      <div className="flex items-start justify-between mb-3">
-                        <span className={`text-[10px] font-mono tracking-widest ${item.type === "award" ? "text-black/50" : "text-white/25"}`}>{item.index}</span>
-                        {item.type === "award" && <span className="text-[10px] font-bold px-2 py-0.5 bg-black text-white rounded-full">🏆 AWARD</span>}
+              {/* Timeline cards — 2×3 grid */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {timeline.map((item) => {
+                  const isInverted = item.type === "award";
+                  return (
+                    <div
+                      key={item.index}
+                      className={`rounded-xl p-4 border flex flex-col gap-2 transition-all duration-300 hover:-translate-y-0.5 group ${
+                        isInverted ? "bg-white text-black border-white shadow-lg" : "bg-white/[0.03] border-white/10 hover:bg-white/[0.06]"
+                      }`}
+                    >
+                      {/* Top row: index + tag */}
+                      <div className="flex items-center justify-between">
+                        <span className={`text-[9px] font-mono tracking-widest ${isInverted ? "text-black/35" : "text-white/20"}`}>{item.index}</span>
+                        <span className={`text-[8px] font-extrabold tracking-[0.2em] px-1.5 py-0.5 rounded ${isInverted ? "bg-black text-white" : item.type === "work" ? "bg-white/10 text-white/50" : "bg-indigo-400/10 text-indigo-300/80"}`}>
+                          {item.tag}
+                        </span>
                       </div>
-                      <p className={`text-[10px] font-bold tracking-widest uppercase mb-2 ${item.type === "award" ? "text-black/40" : "text-white/30"}`}>{item.year}</p>
-                      <h3 className={`text-sm font-extrabold leading-tight mb-1 ${item.type === "award" ? "text-black" : "text-white"}`}>{item.title}</h3>
-                      <p className={`text-xs font-semibold mb-3 ${item.type === "award" ? "text-black/50" : "text-white/40"}`}>{item.place}</p>
+
+                      {/* Year */}
+                      <p className={`text-[9px] font-bold tracking-[0.25em] uppercase ${isInverted ? "text-black/35" : "text-white/22"}`}>{item.year}</p>
+
+                      {/* Title + place */}
+                      <div>
+                        <h3 className={`text-[13px] font-extrabold leading-tight ${isInverted ? "text-black" : "text-white"}`}>{item.title}</h3>
+                        <p className={`text-[10px] font-semibold mt-0.5 ${isInverted ? "text-black/45" : "text-white/35"}`}>{item.place}</p>
+                      </div>
+
+                      {/* Desc */}
+                      <p className={`text-[10px] leading-snug mt-auto pt-1 border-t ${isInverted ? "text-black/55 border-black/10" : "text-white/30 border-white/5"}`}>{item.desc}</p>
                     </div>
-                    <p className={`text-xs leading-relaxed ${item.type === "award" ? "text-black/60" : "text-white/35"}`}>{item.desc}</p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

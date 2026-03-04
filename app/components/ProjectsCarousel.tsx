@@ -61,8 +61,20 @@ const projects = [
 ];
 
 export default function ProjectsCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const midIndex = Math.floor(projects.length / 2);
+  const [activeIndex, setActiveIndex] = useState(midIndex);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Scroll carousel to middle card on mount (only horizontal, no page jump)
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const card = container.children[midIndex] as HTMLElement;
+    if (card) {
+      container.scrollLeft = card.offsetLeft - (container.clientWidth - card.offsetWidth) / 2;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Update active index on manual scroll
   useEffect(() => {

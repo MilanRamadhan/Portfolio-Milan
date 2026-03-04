@@ -12,7 +12,7 @@ const skills = [
 
 const timeline = [
   {
-    year: "2022 — Now",
+    year: "2023 — Now",
     title: "Informatics Student",
     place: "Universitas Syiah Kuala, Banda Aceh",
     desc: "Focusing on Software Engineering, Machine Learning, and Web Development. Active in campus tech communities.",
