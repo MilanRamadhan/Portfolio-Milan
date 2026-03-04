@@ -12,6 +12,7 @@ const projects = [
     tech: ["Next.js", "Tailwind", "Prisma"],
     image: "/image/milanosport.png",
     accent: "#f59e0b",
+    url: "https://milanosport.vercel.app/",
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ const projects = [
     tech: ["WordPress", "PHP", "MySQL"],
     image: "/image/sipapatravel.png",
     accent: "#10b981",
+    url: "https://sipapa-sistem-pencarian-destinasi-p-hazel.vercel.app/",
   },
   {
     id: 3,
@@ -30,6 +32,7 @@ const projects = [
     tech: ["Kotlin", "Firebase", "IoT"],
     image: "/image/aquasave.png",
     accent: "#3b82f6",
+    url: "",
   },
   {
     id: 4,
@@ -39,6 +42,7 @@ const projects = [
     tech: ["Flutter", "Dart", "Firebase"],
     image: "/image/climateaction.png",
     accent: "#8b5cf6",
+    url: "",
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ const projects = [
     tech: ["React", "Node.js", "Stripe"],
     image: "/image/devstore.png",
     accent: "#06b6d4",
+    url: "https://devstore-v1.vercel.app/",
   },
   {
     id: 6,
@@ -57,6 +62,7 @@ const projects = [
     tech: ["Laravel", "Vue.js", "PostgreSQL"],
     image: "/image/silapor.png",
     accent: "#ef4444",
+    url: "https://silapor.vercel.app/",
   },
 ];
 
@@ -176,7 +182,13 @@ export default function ProjectsCarousel() {
           return (
             <div
               key={project.id}
-              onClick={() => goTo(index, true)}
+              onClick={() => {
+                if (isActive && project.url) {
+                  window.open(project.url, "_blank", "noopener,noreferrer");
+                } else {
+                  goTo(index, true);
+                }
+              }}
               className="snap-center flex-shrink-0 w-[680px] max-w-[88vw] rounded-2xl overflow-hidden cursor-pointer border border-white/5"
               style={{
                 opacity: isActive ? 1 : 0.45,
@@ -213,6 +225,27 @@ export default function ProjectsCarousel() {
                     ))}
                   </div>
                 </div>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-shrink-0 flex items-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg border transition-all"
+                    style={{
+                      color: project.accent,
+                      borderColor: `${project.accent}40`,
+                      backgroundColor: `${project.accent}10`,
+                    }}
+                  >
+                    Visit
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           );
