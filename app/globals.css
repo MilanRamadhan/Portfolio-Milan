@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  scroll-behavior: smooth;
   /* Ganti background jadi warna abu-abu hangat seperti di desain */
   background-color: #d4d4d0;
   color: #1a1a1a; /* Text jadi hitam/gelap */

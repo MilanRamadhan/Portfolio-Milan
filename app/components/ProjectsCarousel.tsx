@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 const projects = [
@@ -64,6 +64,31 @@ export default function ProjectsCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Update active index on manual scroll
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const onScroll = () => {
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+      let closest = 0;
+      let closestDist = Infinity;
+      Array.from(container.children).forEach((child, i) => {
+        const el = child as HTMLElement;
+        const cardCenter = el.offsetLeft + el.offsetWidth / 2;
+        const dist = Math.abs(containerCenter - cardCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = i;
+        }
+      });
+      setActiveIndex(closest);
+    };
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    return () => container.removeEventListener("scroll", onScroll);
+  }, []);
+
   const goTo = (index: number) => {
     setActiveIndex(index);
     const container = scrollRef.current;
@@ -117,9 +142,7 @@ export default function ProjectsCarousel() {
                   </div>
                 </div>
                 {/* Category badge */}
-                <div className="absolute bottom-4 left-4 z-10 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase" style={{ backgroundColor: project.accent, color: "#000" }}>
-                  {project.category}
-                </div>
+                <div className="absolute bottom-4 left-4 z-10 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-black/25 border border-white/20 text-white/70 backdrop-blur-sm">{project.category}</div>
               </div>
 
               {/* Card Info */}
@@ -134,9 +157,6 @@ export default function ProjectsCarousel() {
                       </span>
                     ))}
                   </div>
-                </div>
-                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-black font-bold text-sm" style={{ backgroundColor: project.accent }}>
-                  ↗
                 </div>
               </div>
             </div>
