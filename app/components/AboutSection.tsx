@@ -335,14 +335,37 @@ export default function AboutSection() {
         <div className="flex flex-col items-center gap-2">
           <span className={`text-[10px] font-extrabold tracking-[0.35em] uppercase transition-colors duration-300 ${isDark ? "text-white/40" : "text-black/30"}`}>{PANELS[activePanel].label}</span>
           <div className="flex items-center gap-2">
-            {PANELS.map((panel, i) => (
-              <button
-                key={i}
-                onClick={() => scrollToPanel(i)}
-                aria-label={`Go to ${panel.label}`}
-                className={`rounded-full transition-all duration-300 ${activePanel === i ? (isDark ? "w-10 h-2 bg-white" : "w-10 h-2 bg-black") : isDark ? "w-4 h-2 bg-white/20 hover:bg-white/35" : "w-4 h-2 bg-black/15 hover:bg-black/30"}`}
-              />
-            ))}
+            {PANELS.map((panel, i) => {
+              const isActive = activePanel === i;
+              return (
+                <button
+                  key={i}
+                  onClick={() => scrollToPanel(i)}
+                  aria-label={`Go to ${panel.label}`}
+                  className={`rounded-full overflow-hidden relative transition-all duration-300 h-2 ${
+                    isActive
+                      ? `w-10 ${isDark ? "bg-white/20" : "bg-black/15"}`
+                      : isDark
+                      ? "w-4 bg-white/20 hover:bg-white/35"
+                      : "w-4 bg-black/15 hover:bg-black/30"
+                  }`}
+                >
+                  {isActive && isVisible && !isPaused && (
+                    <span
+                      key={`${activePanel}-progress`}
+                      className={`absolute inset-y-0 left-0 rounded-full ${isDark ? "bg-white" : "bg-black"}`}
+                      style={{
+                        width: "0%",
+                        animationName: "panel-progress",
+                        animationDuration: `${AUTO_INTERVAL}ms`,
+                        animationTimingFunction: "linear",
+                        animationFillMode: "forwards",
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 

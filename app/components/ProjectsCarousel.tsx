@@ -60,10 +60,48 @@ const projects = [
   },
 ];
 
+const AUTO_INTERVAL = 4000;
+const PAUSE_AFTER_INTERACT = 10000;
+
 export default function ProjectsCarousel() {
   const midIndex = Math.floor(projects.length / 2);
   const [activeIndex, setActiveIndex] = useState(midIndex);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeIndexRef = useRef(midIndex);
+
+  useEffect(() => { activeIndexRef.current = activeIndex; }, [activeIndex]);
+
+  // IntersectionObserver — track visibility
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.4 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-advance
+  useEffect(() => {
+    if (!isVisible || isPaused) return;
+    const id = setInterval(() => {
+      const next = (activeIndexRef.current + 1) % projects.length;
+      const container = scrollRef.current;
+      if (container) {
+        const card = container.children[next] as HTMLElement;
+        if (card) card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+      setActiveIndex(next);
+      activeIndexRef.current = next;
+    }, AUTO_INTERVAL);
+    return () => clearInterval(id);
+  }, [isVisible, isPaused]);
 
   // Scroll carousel to middle card on mount (only horizontal, no page jump)
   useEffect(() => {
@@ -101,19 +139,25 @@ export default function ProjectsCarousel() {
     return () => container.removeEventListener("scroll", onScroll);
   }, []);
 
-  const goTo = (index: number) => {
+  const goTo = (index: number, manual = false) => {
     setActiveIndex(index);
+    activeIndexRef.current = index;
     const container = scrollRef.current;
     if (!container) return;
     const card = container.children[index] as HTMLElement;
     if (card) card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    if (manual) {
+      setIsPaused(true);
+      if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = setTimeout(() => setIsPaused(false), PAUSE_AFTER_INTERACT);
+    }
   };
 
-  const prev = () => goTo((activeIndex - 1 + projects.length) % projects.length);
-  const next = () => goTo((activeIndex + 1) % projects.length);
+  const prev = () => goTo((activeIndex - 1 + projects.length) % projects.length, true);
+  const next = () => goTo((activeIndex + 1) % projects.length, true);
 
   return (
-    <section className="bg-[#0d1117] py-11 overflow-hidden">
+    <section ref={sectionRef} className="bg-[#0d1117] py-11 overflow-hidden">
       {/* Header */}
       <div className="text-center mb-16 px-6">
         <p className="text-gray-500 text-xs uppercase tracking-[0.3em] mb-3">— What I've Built —</p>
@@ -133,7 +177,7 @@ export default function ProjectsCarousel() {
           return (
             <div
               key={project.id}
-              onClick={() => goTo(index)}
+              onClick={() => goTo(index, true)}
               className="snap-center flex-shrink-0 w-[680px] max-w-[88vw] rounded-2xl overflow-hidden cursor-pointer border border-white/5"
               style={{
                 opacity: isActive ? 1 : 0.45,
@@ -182,17 +226,37 @@ export default function ProjectsCarousel() {
           ‹
         </button>
         <div className="flex gap-2">
-          {projects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className="h-1.5 rounded-full transition-all duration-300"
-              style={{
-                width: i === activeIndex ? 28 : 8,
-                backgroundColor: i === activeIndex ? projects[activeIndex].accent : "rgba(255,255,255,0.2)",
-              }}
-            />
-          ))}
+          {projects.map((_, i) => {
+            const isActive = i === activeIndex;
+            return (
+              <button
+                key={i}
+                onClick={() => goTo(i, true)}
+                className="h-1.5 rounded-full overflow-hidden transition-all duration-300 relative"
+                style={{
+                  width: isActive ? 28 : 8,
+                  backgroundColor: isActive
+                    ? `${projects[activeIndex].accent}40`
+                    : "rgba(255,255,255,0.2)",
+                }}
+              >
+                {isActive && isVisible && !isPaused && (
+                  <span
+                    key={`${activeIndex}-progress`}
+                    className="absolute inset-y-0 left-0 rounded-full"
+                    style={{
+                      width: "0%",
+                      backgroundColor: projects[activeIndex].accent,
+                      animationName: "panel-progress",
+                      animationDuration: `${AUTO_INTERVAL}ms`,
+                      animationTimingFunction: "linear",
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
         <button onClick={next} className="w-11 h-11 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center text-lg transition">
           ›
