@@ -37,7 +37,7 @@ const timeline = [
     index: "01",
   },
   {
-    year: "2023 — Now",
+    year: "2024",
     title: "Self-taught Developer",
     place: "freeCodeCamp & Online Platforms",
     desc: "Completed certifications in Responsive Web Design, JavaScript Algorithms, and Data Structures through freeCodeCamp and self-paced platforms.",
@@ -46,7 +46,7 @@ const timeline = [
     index: "02",
   },
   {
-    year: "2024",
+    year: "2024 — 2025",
     title: "BEM FMIPA USK",
     place: "Badan Eksekutif Mahasiswa FMIPA",
     desc: "Member of the Student Executive Board, contributing to the Videography & Design division for faculty-level events and publications.",
@@ -55,7 +55,7 @@ const timeline = [
     index: "03",
   },
   {
-    year: "2025",
+    year: "2025 — 2026",
     title: "HMIF USK — Vice Head",
     place: "Dept. Sosial Masyarakat",
     desc: "Vice Head of the Social Community department at the Informatics Student Association — coordinating outreach and welfare programs.",
@@ -64,7 +64,7 @@ const timeline = [
     index: "04",
   },
   {
-    year: "2026",
+    year: "2026 — 2027",
     title: "HMIF USK — Vice Chairman I",
     place: "Himpunan Mahasiswa Informatika",
     desc: "Elected Vice Chairman I — overseeing organizational strategy, inter-department coordination, and student representation at campus level.",
@@ -73,7 +73,7 @@ const timeline = [
     index: "05",
   },
   {
-    year: "2025 — Now",
+    year: "2026",
     title: "IBM SkillsBuild AI Scholarship",
     place: "Pijak × Dicoding × IBM SkillsBuild",
     desc: "Recipient of a fully-funded AI training scholarship through the Pijak program — a collaboration between Dicoding and IBM SkillsBuild.",
