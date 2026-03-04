@@ -85,7 +85,9 @@ export default function Home() {
       {/* ══════════════════════════════════════════ */}
       <section id="contact" className="font-sans">
         {/* ── Things I Care About ── */}
-        <div className="bg-[#f5f5f0] py-20 px-6 md:px-16 border-b border-gray-200">
+        <div className="relative bg-[#f5f5f0] py-20 px-6 md:px-16 border-b border-gray-200">
+          {/* shadow bleed from dark About section above */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0d1117]/25 via-[#0d1117]/6 to-transparent pointer-events-none" />
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center gap-12">
             <div className="md:w-1/3">
               <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">— Beyond Code</p>

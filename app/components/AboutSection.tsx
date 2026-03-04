@@ -244,43 +244,48 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* ═══ Left / Right arrow nav ═══ */}
-      {activePanel > 0 && (
+      {/* ═══ Bottom navigation bar ═══ */}
+      <div className="absolute bottom-0 inset-x-0 z-20 flex items-center justify-between px-6 md:px-14 py-4">
+        {/* Prev button */}
         <button
-          onClick={() => scrollToPanel(activePanel - 1)}
+          onClick={() => scrollToPanel(Math.max(0, activePanel - 1))}
+          disabled={activePanel === 0}
           aria-label="Previous panel"
-          className={`absolute left-14 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-9 h-9 rounded-full border text-sm transition-all duration-200 ${
-            isDark ? "border-white/15 text-white/40 hover:bg-white/10 hover:text-white hover:border-white/30" : "border-black/10 text-black/30 hover:bg-black/5 hover:text-black hover:border-black/20"
+          className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-all duration-200 disabled:opacity-0 disabled:pointer-events-none ${
+            isDark ? "text-white/40 hover:text-white" : "text-black/30 hover:text-black"
           }`}
         >
-          ←
+          <span className={`w-7 h-7 rounded-full border flex items-center justify-center text-sm ${isDark ? "border-white/15 hover:bg-white/10" : "border-black/10 hover:bg-black/5"}`}>←</span>
+          Prev
         </button>
-      )}
-      {activePanel < PANELS.length - 1 && (
-        <button
-          onClick={() => scrollToPanel(activePanel + 1)}
-          aria-label="Next panel"
-          className={`absolute right-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-9 h-9 rounded-full border text-sm transition-all duration-200 ${
-            isDark ? "border-white/15 text-white/40 hover:bg-white/10 hover:text-white hover:border-white/30" : "border-black/10 text-black/30 hover:bg-black/5 hover:text-black hover:border-black/20"
-          }`}
-        >
-          →
-        </button>
-      )}
 
-      {/* ═══ Dot indicator ═══ */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-        <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${isDark ? "text-white/25" : "text-black/25"}`}>{PANELS[activePanel].label}</span>
-        <div className="flex items-center gap-2">
-          {PANELS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollToPanel(i)}
-              aria-label={`Panel ${i + 1}`}
-              className={`h-1 rounded-full transition-all duration-300 ${activePanel === i ? (isDark ? "w-8 bg-white" : "w-8 bg-black") : isDark ? "w-2 bg-white/20" : "w-2 bg-black/15"}`}
-            />
-          ))}
+        {/* Center — label + pills */}
+        <div className="flex flex-col items-center gap-2">
+          <span className={`text-[10px] font-extrabold tracking-[0.35em] uppercase transition-colors duration-300 ${isDark ? "text-white/40" : "text-black/30"}`}>{PANELS[activePanel].label}</span>
+          <div className="flex items-center gap-2">
+            {PANELS.map((panel, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToPanel(i)}
+                aria-label={`Go to ${panel.label}`}
+                className={`rounded-full transition-all duration-300 ${activePanel === i ? (isDark ? "w-10 h-2 bg-white" : "w-10 h-2 bg-black") : isDark ? "w-4 h-2 bg-white/20 hover:bg-white/35" : "w-4 h-2 bg-black/15 hover:bg-black/30"}`}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Next button */}
+        <button
+          onClick={() => scrollToPanel(Math.min(PANELS.length - 1, activePanel + 1))}
+          disabled={activePanel === PANELS.length - 1}
+          aria-label="Next panel"
+          className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-all duration-200 disabled:opacity-0 disabled:pointer-events-none ${
+            isDark ? "text-white/40 hover:text-white" : "text-black/30 hover:text-black"
+          }`}
+        >
+          Next
+          <span className={`w-7 h-7 rounded-full border flex items-center justify-center text-sm ${isDark ? "border-white/15 hover:bg-white/10" : "border-black/10 hover:bg-black/5"}`}>→</span>
+        </button>
       </div>
     </section>
   );
