@@ -25,7 +25,8 @@ interface Project {
   impact: string;
   challenge: string;
   lesson: string;
-  image: string;
+  image?: string;
+  gradient?: string;
   url?: string;
 }
 
@@ -116,11 +117,90 @@ const projects: Project[] = [
     image: "/image/milanosport.png",
     url: "https://milanosport.vercel.app/",
   },
+  {
+    id: 6,
+    title: "SIMATA",
+    summary:
+      "A bus ticket management platform with two operational sides — an admin dashboard for agencies to manage routes, schedules, and daily passenger manifests, and a customer side for searching trips in real time, selecting seats, and issuing e-tickets.",
+    type: "Booking / Web Platform",
+    teamType: "Group",
+    role: "Full-Stack Developer",
+    technologies: ["Next.js", "React", "Prisma", "TypeScript"],
+    impact:
+      "Digitized the entire ticketing flow for bus travel agents — from posting routes to selling seats — while giving passengers a self-service way to find trips and book seats without phone calls or queues.",
+    challenge:
+      "Designing a responsive seat-selection UI that minimizes double-booking while keeping inventory consistent across concurrent customers. Coordinating the work across a four-person team also meant keeping our codebase clean and mergeable.",
+    lesson:
+      "Building software in a team taught me that clear structure and communication matter as much as the code itself. A feature isn't done until everyone can build on top of it.",
+    image: "/image/simata.png",
+    gradient: "from-[#0071E3] to-[#42A5F5]",
+  },
+  {
+    id: 7,
+    title: "inget.in",
+    summary:
+      "A fast, time-and-category based note-taking app for capturing plans simply and staying organized. Built with a cleanly separated frontend and backend to practice software-quality principles like testing, structure, and maintainability.",
+    type: "Productivity / Full-Stack",
+    teamType: "Individual",
+    role: "Full-Stack Developer",
+    technologies: ["Next.js 14", "NestJS", "PostgreSQL", "Prisma"],
+    impact:
+      "Turned scattered reminders into one quick, organized place — letting users jot down plans by time and category in seconds, backed by secure auth and a real database.",
+    challenge:
+      "Keeping a clean separation between a Next.js frontend and a NestJS backend while enforcing software-quality practices — proper structure, validation, and testability — rather than just shipping features.",
+    lesson:
+      "Quality isn't something you add at the end. Writing maintainable, well-structured code from the start makes everything that comes after it faster and safer.",
+    image: "/image/ingetin.png",
+    gradient: "from-[#7C3AED] to-[#A78BFA]",
+  },
+  {
+    id: 8,
+    title: "Medical Chatbot",
+    summary:
+      "An NLP-powered medical chatbot that understands users' health questions and responds with relevant information, backed by a trained machine-learning model and a full pipeline from data processing to a web interface.",
+    type: "AI / NLP",
+    teamType: "Individual",
+    role: "NLP Engineer & Full-Stack Developer",
+    technologies: ["Python", "NLP / ML", "Jupyter", "Web Frontend"],
+    impact:
+      "Made health information more accessible through natural conversation — letting people ask questions in their own words and get relevant answers instead of navigating complex medical resources.",
+    challenge:
+      "Training a model that interprets messy, real-world medical questions accurately, then connecting that model to a usable backend and frontend. Bridging data science and product engineering is its own discipline.",
+    lesson:
+      "An ML model is only half the product. The real value appears when you wrap it in an interface people can actually talk to — the data science and the user experience have to meet.",
+    image: "/image/medicalchatbot.png",
+    gradient: "from-[#1A7F37] to-[#4ADE80]",
+  },
+  {
+    id: 9,
+    title: "MicroJourney AR",
+    summary:
+      "A WebAR biology learning tool for junior-high students that visualizes the human digestive system and how synthetic microplastics disrupt it. Built around the Discovery Learning model, students scan real plastic objects to trigger an AR investigation.",
+    type: "EdTech / AR",
+    teamType: "Group",
+    role: "Frontend Developer & AR Integration",
+    technologies: ["WebAR", "Computer Vision", "Next.js", "TypeScript"],
+    impact:
+      "Made an invisible biological process tangible — showing students how microplastics reach and damage the stomach and intestines, something a textbook alone can't convey. Built for the LIDM national competition.",
+    challenge:
+      "Bringing AR and computer vision into the browser and tying every interaction to the six stages of the Discovery Learning syntax, so the technology served the pedagogy instead of distracting from it.",
+    lesson:
+      "Technology in education works best when it's built around how students actually learn. The AR was never the point — the understanding it unlocked was.",
+    image: "/image/microjourney.png",
+    gradient: "from-[#C2410C] to-[#FB923C]",
+  },
 ];
+
+const fallbackGradient = "from-[#86868B] to-[#C7C7CC]";
 
 export default function FeaturedProjects() {
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
   const expandedProject = projects.find((p) => p.id === expandedId);
+
+  const showImage = (p: Project) => p.image && !failedImages.has(p.id);
+  const markFailed = (id: number) =>
+    setFailedImages((prev) => new Set(prev).add(id));
 
   return (
     <section id="projects" className="py-24 md:py-32 bg-white">
@@ -160,12 +240,25 @@ export default function FeaturedProjects() {
                       index === 0 ? "h-64 md:h-full" : "h-52"
                     }`}
                   >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                    />
+                    {showImage(project) ? (
+                      <Image
+                        src={project.image!}
+                        alt={project.title}
+                        fill
+                        onError={() => markFailed(project.id)}
+                        className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div
+                        className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br ${
+                          project.gradient ?? fallbackGradient
+                        } group-hover:scale-105 transition-transform duration-700`}
+                      >
+                        <span className="text-white font-bold tracking-tight text-2xl md:text-3xl px-6 text-center drop-shadow-sm">
+                          {project.title}
+                        </span>
+                      </div>
+                    )}
                     {/* Overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                     {/* Type badge */}
@@ -236,12 +329,21 @@ export default function FeaturedProjects() {
             >
               {/* Modal header image */}
               <div className="relative h-48 md:h-64 overflow-hidden rounded-t-3xl">
-                <Image
-                  src={expandedProject.image}
-                  alt={expandedProject.title}
-                  fill
-                  className="object-cover object-top"
-                />
+                {showImage(expandedProject) ? (
+                  <Image
+                    src={expandedProject.image!}
+                    alt={expandedProject.title}
+                    fill
+                    onError={() => markFailed(expandedProject.id)}
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${
+                      expandedProject.gradient ?? fallbackGradient
+                    }`}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <button
                   onClick={() => setExpandedId(null)}
