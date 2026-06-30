@@ -64,7 +64,7 @@ export default function BeyondTech() {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
             {interests.map((item, index) => (
               <SectionReveal key={index} delay={index * 0.1}>
-                <div className="bg-white rounded-2xl border border-[#E8E8ED] hover:border-[#D2D2D7] hover:shadow-lg hover:shadow-black/[0.03] transition-all duration-300 overflow-hidden h-full flex flex-col">
+                <div className="group bg-white rounded-2xl border border-[#E8E8ED] hover:border-[#D2D2D7] hover:shadow-lg hover:shadow-black/[0.03] transition-all duration-300 overflow-hidden h-full flex flex-col">
                   {/* Image */}
                   {item.image && (
                     <div className="relative h-56 sm:h-64 overflow-hidden border-b border-[#E8E8ED]">
@@ -72,7 +72,7 @@ export default function BeyondTech() {
                         src={item.image}
                         alt={item.title}
                         fill
-                        className="object-cover hover:scale-105 transition-transform duration-700"
+                        className="object-cover hover-zoom"
                         style={{ objectPosition: item.position || "center center" }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />

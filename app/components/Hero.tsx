@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowDown, Briefcase, Mail, FileText } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowDown, Briefcase, Mail, FileText, X } from "lucide-react";
 
 export default function Hero() {
+  const [photoOpen, setPhotoOpen] = useState(false);
+
   return (
     <section
       id="hero"
@@ -48,7 +51,12 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-12"
           >
             {/* Photo */}
-            <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-[#D2D2D7] ring-offset-2 ring-offset-[#FAFAFA] flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => setPhotoOpen(true)}
+              aria-label="View profile photo"
+              className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-[#D2D2D7] ring-offset-2 ring-offset-[#FAFAFA] flex-shrink-0 cursor-pointer transition-all duration-300 hover:ring-[#0071E3] hover:scale-105 focus:outline-none focus-visible:ring-[#0071E3]"
+            >
               <Image
                 src="/image/milan_new.jpg"
                 alt="Muhammad Milan Ramadhan Mulizar"
@@ -57,7 +65,7 @@ export default function Hero() {
                 style={{ objectPosition: "center 25%" }}
                 priority
               />
-            </div>
+            </button>
 
             <div>
               <p className="text-[#1D1D1F] font-semibold text-base">
@@ -124,6 +132,45 @@ export default function Hero() {
           <ArrowDown className="w-5 h-5 text-[#AEAEB2]" />
         </motion.div>
       </motion.div>
+
+      {/* Profile photo lightbox */}
+      <AnimatePresence>
+        {photoOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+            onClick={() => setPhotoOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-[min(82vw,440px)] aspect-square rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10"
+            >
+              <Image
+                src="/image/milan_new.jpg"
+                alt="Muhammad Milan Ramadhan Mulizar"
+                fill
+                className="object-cover"
+                style={{ objectPosition: "center 25%" }}
+                sizes="440px"
+              />
+            </motion.div>
+            <button
+              onClick={() => setPhotoOpen(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center hover:bg-white transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5 text-[#1D1D1F]" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

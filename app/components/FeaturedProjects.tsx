@@ -246,13 +246,13 @@ export default function FeaturedProjects() {
                         alt={project.title}
                         fill
                         onError={() => markFailed(project.id)}
-                        className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                        className="object-cover object-top hover-zoom"
                       />
                     ) : (
                       <div
                         className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br ${
                           project.gradient ?? fallbackGradient
-                        } group-hover:scale-105 transition-transform duration-700`}
+                        } hover-zoom`}
                       >
                         <span className="text-white font-bold tracking-tight text-2xl md:text-3xl px-6 text-center drop-shadow-sm">
                           {project.title}
